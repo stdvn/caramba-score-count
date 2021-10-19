@@ -23,6 +23,16 @@
         <ion-textarea [(ngModel)]="name" placeholder="Nom du joueur"></ion-textarea>
         <ion-button (click)="addPlayer()" expand="block round">Ajouter un joueur</ion-button>
       </ion-item>
+      <ion-button *ngIf="(players$|async).length > 0"
+                  [routerLink]="'/game'"
+                  expand="block round">
+        Démarrer le jeu
+      </ion-button>
+      <ion-button *ngIf="(players$|async).length > 0"
+                  (click)="clearPlayers()"
+                  expand="block round">
+        Supprimer les joueurs
+      </ion-button>
     </ion-list>
   </div>
 </ion-content>

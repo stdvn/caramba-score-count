@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { addPlayer } from '../../state/player/player.actions';
+import { addPlayer, clearPlayers } from '../../state/player/player.actions';
 import { Observable } from 'rxjs';
 import { Player } from '../../models/player.model';
 import { selectAllPlayers } from '../../state/player/player.reducer';
@@ -13,7 +13,7 @@ import { selectPlayers } from '../../state/player/player.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
-
+  
   name: string;
 
   players$: Observable<Player[]> = this.store.pipe(select(selectPlayers));
@@ -23,7 +23,14 @@ export class HomePage {
   ) { }
 
   addPlayer(): void {
+    if (!this.name) {
+      return;
+    }
     this.store.dispatch(addPlayer({ name: this.name }));
     this.name = null;
+  }
+
+  clearPlayers(): void {
+    this.store.dispatch(clearPlayers());
   }
 }

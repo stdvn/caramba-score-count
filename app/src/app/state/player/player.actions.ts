@@ -8,5 +8,18 @@ export const addPlayer = createAction(
 
 export const updateScore = createAction(
   '[Player] Update score',
-  props<{ player: Player, scoreToAdd: number }>(),
+  props<{ scoreToAdd: number }>(),
+);
+
+export const selectPlayer = createAction(
+  '[Player] Select player',
+  props<{ name: string }>(),
+);
+
+export const resetScores = createAction(
+  '[Player] Reset scores',
+);
+
+export const clearPlayers = createAction(
+  '[Player] Clear players',
 );

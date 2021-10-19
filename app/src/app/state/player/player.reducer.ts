@@ -1,6 +1,6 @@
 import { Player } from '../../models/player.model';
 import { createReducer, createAction, on, Action } from '@ngrx/store';
-import { addPlayer, updateScore } from './player.actions';
+import { addPlayer, updateScore, selectPlayer, resetScores, clearPlayers } from './player.actions';
 import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
 import { PlayerState } from './player.state';
 
@@ -22,12 +22,30 @@ export const createPlayerReducer = createReducer(
   on(addPlayer, (state, { name }) => {
     return adapter.upsertOne({ name: name, score: 0 }, state);
   }),
-  on(updateScore, (state, { player, scoreToAdd }) => {
+  on(updateScore, (state, { scoreToAdd }) => {
+    const currentPlayer = state.entities[state.selectedPlayerId];
     const updatedPlayer: Update<Player> = {
-      id: player.name,
-      changes: { score: player.score + scoreToAdd },
+      id: currentPlayer.name,
+      changes: { score: currentPlayer.score + scoreToAdd },
     };
     return adapter.updateOne(updatedPlayer, state);
+  }),
+  on(selectPlayer, (state, { name }) => ({
+    ...state,
+    selectedPlayerId: name,
+  })),
+  on(resetScores, (state) => {
+    const resetPlayers = state.ids.map(playerId => ({
+      id: playerId,
+      changes: { score: 0 },
+    }));
+    return adapter.updateMany(resetPlayers, state);
+  }),
+  on(clearPlayers, (state) => {
+    return adapter.removeAll({
+      ...state,
+      selectedPlayerId: null,
+    });
   }),
 );
 

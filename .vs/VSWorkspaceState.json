@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\src",
+    "\\app\\src\\app",
+    "\\app\\src\\app\\features",
+    "\\app\\src\\app\\features\\score-modal",
+    "\\app\\src\\app\\pages",
+    "\\app\\src\\app\\pages\\game",
+    "\\app\\src\\app\\state",
+    "\\app\\src\\app\\state\\player"
+  ],
+  "SelectedNode": "\\app\\src\\app\\pages\\game\\game.page.ts",
+  "PreviewInSolutionExplorer": false
+}
